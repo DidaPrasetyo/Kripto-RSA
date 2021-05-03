@@ -31,7 +31,6 @@ def client_program():
             check_q = rtext.prime_check(q)
         msg = input("input plaint text for encrypt and the number separated with ',' for decrypt : \n")
 
-        arr = (p, q, msg, choose)
         data = json.dumps({"a": p, "b": q, "c": msg, "d": choose})
         client_socket.send(data.encode())
         data = client_socket.recv(4096)  # receive response

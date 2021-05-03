@@ -1,12 +1,4 @@
-'''
-WELCOME TO THE RSA ENCRYPTOR. THIS IS AN INTERACTIVE TOOL USED TO ENCRYPT OR DECRYPT A MESSAGE USING THE FAMOUS RSA ALGORITHM.
- 
-PROGRAMMER: ANIRUDH GOTTIPARTHY
-'''
- 
 import math
-
-#Input Prime Numbers
 
 #Check if Input's are Prime
 '''THIS FUNCTION AND THE CODE IMMEDIATELY BELOW THE FUNCTION CHECKS WHETHER THE INPUTS ARE PRIME OR NOT.'''
@@ -20,7 +12,6 @@ def prime_check(a):
             if not(a%i):
                 return False
     return True
-
 #GCD
 '''CALCULATION OF GCD FOR 'e' CALCULATION.'''
 def egcd(e,r):
@@ -33,8 +24,7 @@ def eugcd(e,r):
     for i in range(1,r):
         while(e!=0):
             a,b=r//e,r%e
-            # if(b!=0):
-                # print("%d = %d*(%d) + %d"%(r,a,e,b))
+
             r=e
             e=b
  
@@ -45,7 +35,7 @@ def eea(a,b):
     else:
         gcd,s,t = eea(b,a%b)
         s = s-((a//b) * t)
-        # print("%d = %d*(%d) + (%d)*(%d)"%(gcd,a,t,s,b))
+        
         return(gcd,t,s)
  
 #Multiplicative Inverse
@@ -54,10 +44,6 @@ def mult_inv(e,r):
     if(gcd!=1):
         return None
     else:
-        # if(s<0):
-            # print("s=%d. Since %d is less than 0, s = s(modr), i.e., s=%d."%(s,s,s%r))
-        # elif(s>0):
-            # print("s=%d."%(s))
         return s%r
  
 #Encryption
@@ -99,12 +85,10 @@ def decrypt(priv_key,c_text):
     return x
 
 def main(p, q, message, choose):
-    # p = int(input("Enter a prime number for p: "))
-    # q = int(input("Enter a prime number for q: "))
-    
     #RSA Modulus
     '''CALCULATION OF RSA MODULUS 'n'.'''
     n = p * q
+
     #Eulers Toitent
     '''CALCULATION OF EULERS TOITENT 'r'.'''
     r = (p-1)*(q-1)
@@ -114,26 +98,19 @@ def main(p, q, message, choose):
     for i in range(1,1000):
         if(egcd(i,r)==1):
             e=i
+
     #d, Private and Public Keys
     '''CALCULATION OF 'd', PRIVATE KEY, AND PUBLIC KEY.'''
     eugcd(e,r)
     d = mult_inv(e,r)
     public = (e,n)
     private = (d,n)
-    #Message
-    # message = input("What would you like encrypted or decrypted?(Separate numbers with ',' for decryption):")
-    # print("Your message is:",message)
-     
-    #Choose Encrypt or Decrypt and Print
-    # choose = input("Type '1' for encryption and '2' for decrytion.")
+    
     if(choose==1):
         enc_msg = encrypt(public,message)
-        # print("Your encrypted message is:",enc_msg)
     elif(choose==2):
         enc_msg = decrypt(private,message)
-        # print("Your decrypted message is:",decrypt(private,message))
     else:
-        print("You entered the wrong option.")
-    return enc_msg
+        enc_msg = "You entered the wrong option."
 
-# main(3, 5, "12,2,12,0", 2)
+    return enc_msg
